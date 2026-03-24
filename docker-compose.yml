@@ -1,0 +1,47 @@
+# =============================================================================
+#  CardioRisk AI — Docker Compose
+#  Serviços: Streamlit App + MLflow UI
+# =============================================================================
+
+services:
+  # ---- App Streamlit ----
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cardiorisk-app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/app/models:ro
+      - ./mlruns:/app/mlruns:ro
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_HEADLESS=true
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8501/_stcore/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ---- MLflow UI ----
+  mlflow:
+    image: python:3.11-slim
+    container_name: cardiorisk-mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlruns:ro
+    command: >
+      bash -c "pip install --quiet mlflow &&
+               mlflow ui --host 0.0.0.0 --port 5000
+               --backend-store-uri file:///mlruns"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5000/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
