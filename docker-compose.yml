@@ -1,0 +1,70 @@
+# =============================================================================
+#  CardioRisk AI — Docker Compose
+#  Serviços: Streamlit App + MLflow UI + PostgreSQL
+# =============================================================================
+
+services:
+  # ---- PostgreSQL ----
+  db:
+    image: postgres:15-alpine
+    container_name: cardiorisk-db
+    environment:
+      POSTGRES_USER: cardiorisk
+      POSTGRES_PASSWORD: cardiorisk123
+      POSTGRES_DB: cardiorisk_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U cardiorisk -d cardiorisk_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ---- App Streamlit ----
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cardiorisk-app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/app/models:ro
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_HEADLESS=true
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=cardiorisk_db
+      - DB_USER=cardiorisk
+      - DB_PASSWORD=cardiorisk123
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8501/_stcore/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ---- MLflow UI ----
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    container_name: cardiorisk-mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/app/mlruns
+    restart: unless-stopped
+
+volumes:
+  pgdata:
