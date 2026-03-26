@@ -110,6 +110,35 @@ python notebooks/analise_crisp_dm.py
 streamlit run app/app.py
 ```
 
+### Opção 3 — Deploy no Streamlit Community Cloud
+
+Use estas configurações ao criar o app:
+
+- **Repository:** `eumoas/CardioRiskAI`
+- **Branch:** `main`
+- **Main file path:** `app/app.py`
+- **Python version:** definida em `runtime.txt`
+
+Se quiser somente a predição, sem salvar pacientes, não precisa configurar banco.
+
+Se quiser persistência PostgreSQL, adicione estes segredos em **App Settings > Secrets**:
+
+```toml
+[database]
+host = "seu-host"
+port = 5432
+dbname = "seu-banco"
+user = "seu-usuario"
+password = "sua-senha"
+```
+
+Se o deploy falhar, confira primeiro:
+
+- se o arquivo principal informado no Streamlit é `app/app.py`
+- se o repositório contém a pasta `models/` com os arquivos `.pkl` e `.json`
+- se o `requirements.txt` foi atualizado com `psycopg2-binary`
+- se você não está tentando usar `docker-compose` no Streamlit Cloud, porque ele não executa containers do repositório
+
 ---
 
 ## 📊 Features Utilizadas pelo Modelo

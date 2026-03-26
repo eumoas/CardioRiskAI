@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtualenv
+.venv/
+venv/
+env/
+.env
+
+# MLflow — pasta de experimentos (muito grande para GitHub)
+mlruns/
+
+# Secrets (credenciais) — NUNCA versionar
+.streamlit/secrets.toml
+
+# Dataset grande — considere usar Git LFS
+# dataset_saude_brasil.csv
+
+# Notebooks output (gerado automaticamente ao rodar o pipeline)
+notebooks/figures/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.agent/
+.gemini/
+.vscode/
+.idea/
+
+# Logs
+*.log
+
