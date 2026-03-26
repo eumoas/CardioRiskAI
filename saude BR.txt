@@ -1,0 +1,6 @@
+População: 20 mil pessoas simuladas, com idades entre 18 e 90 anos.
+Estilo de vida: passos diários, horas de sono, ingestão de água, calorias, horas de trabalho.
+Fatores clínicos: frequência cardíaca em repouso, pressão arterial, colesterol.
+Hábitos: tabagismo, consumo de álcool.
+Histórico familiar: presença ou não de predisposição.
+Risco_Doenca: classificado em Baixo, Moderado, Alto ou Muito Alto conforme combinação de fatores.
