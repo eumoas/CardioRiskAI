@@ -1,0 +1,78 @@
+# Ambiente Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Variáveis de ambiente (NUNCA subir — o cliente usa .env.example)
+.env
+
+# Banco de dados (gerado em runtime)
+*.db
+*.sqlite
+
+# Arquivos gerados pelo sistema
+uploads/
+relatorios/
+*.log
+*.docx
+*.pdf
+/EASESPOT_Relatorio_Tecnico_Sprint2*.docx
+/EASESPOT_Relatorio_Tecnico_Sprint2*.pdf
+/Relatorio_Tecnico_EASE_Sprint2.docx
+
+# Modelos de backup / retreino antigos (pesados e desnecessários)
+models/*.pt
+models/*.zip
+models/best_pre_retreino_*.pt
+models/YOLO8-FINAL.zip
+models/best_backup_*.pt
+models/YOLO8-FINAL/
+
+# Runs de treinamento YOLO (pesados)
+runs/
+
+# Dataset local (grande demais para GitHub — gerado pelo exportador)
+Yoloboundingbox/images/
+Yoloboundingbox/labels/
+Yoloboundingbox/labels.cache
+Yoloboundingbox/.exportados.json
+dataset/
+*.yaml.bak
+
+# Notebooks de treino (opcionais para o cliente)
+*.ipynb
+
+# Arquivos internos / temporários / documentação dev
+CHECKLIST_POR_ARQUIVO.md
+COLAB_RF_DETR.md
+pseudolabeling_revisao.txt
+proposta_apresentacao.md
+criticidade.jpeg
+teste_imagem.jpg
+classes_selecionadas.txt
+gerar_relatorio_tecnico.py
+yolo_editor_config.json
+
+
+
+# Assets duplicados na raiz (os oficiais ficam em frontend/)
+/fundo.png
+/novologo.png
+
+# n8n JSON duplicado na raiz
+/EASESPOT - Qualidade Textil.json
+
+# n8n data volume (gerado em runtime)
+n8n_data/
+
+
+
+# IDEs / ferramentas
+.vscode/
+.idea/
+.codex
+.codex/
+*.swp
